@@ -110,7 +110,7 @@ np.random.seed(0)
 canti=805
 it=1
 ini=3
-k=5
+k=3
 tiempo1=[]
 cantidad=[]
 tiempo2=[]
@@ -129,7 +129,7 @@ query=[]
 rowq=[]
 quer=''
 
-bus=1024*143
+bus=1024*650
 
 with open('index.csv','rb') as f:
 	reader = csv.reader(f,delimiter=',',quotechar='"')
@@ -154,104 +154,51 @@ with open('index.csv','rb') as f:
 				row1.append(float(i))
 				counter=counter+1
 	X.append(row1)	
-	#pause()
 
-	#for op in range(100):
 	query.append(rowq)
-print X
+
+
+
 X=np.asarray(X)
 X1=X
-print X1
-print image
-print len(image)
-print len(X1	)
 
-print query
-#t1=time.time()
+
+t1=time.time()
 BT = BallTree(X1,image)
-#tiempo_1=time.time()-t1
-#	t#iempo1.append(tiempo_1)
+tiempo_1=time.time()-t1
+tiempo1.append(tiempo_1)
 
-
-
-#otherpoint= np.random.random((1, 1023)) * 2 - 1
 otherpoint=np.array(query)
 otherpoint=otherpoint.tolist()[0]
 print quer
 mostrar_que(quer)
 Q=[]
-for i in range(k):
-    point=[distancia(otherpoint,(X.tolist())[i]),image[i],(X.tolist())[i]]
-    heappush_max(Q,point)
-	
-
-	
-
-	#for op1 in range(100): 
-#t2=time.time()
-BT.search(otherpoint,k,Q)
-mostrar_res(Q)
-
-"""for i in Q:
-	print i[1]
-	"""	
-#print
-#print "este es otro"
-#print otherpoint
 
 
-##		tiempo_2=time.time()-t2
-	#tiempo2.append(tiempo_2)
-	#cantidad.append(iterator) 
-	#print ('estoy en %d' %iterator)
-"""
-plt.ion()
-fig=plt.figure()
-bx = fig.add_subplot(111)
-cx = fig.add_subplot(111)
+for op1 in range(5,10): 
+	Q=[]
+	for i in range(op1):
+		point=[distancia(otherpoint,(X.tolist())[i]),image[i],(X.tolist())[i]]
+		heappush_max(Q,point)
+	t2=time.time()
+	BT.search(otherpoint,op1,Q)
+	tiempo_2=time.time()-t2
+	tiempo2.append(tiempo_2)
+	cantidad.append(op1) 
+	#mostrar_res(Q)
+	#pause()
 
-for level in range(1, 7):
-    ax = fig.add_subplot(111)
-    ax.scatter(X[:, 0], X[:, 1], s=2)
-    BT.draw_circle(ax, depth=level - 1)
+'''
+formato1=''
+formato1=formato1+'balltree'+'_build.csv'
 
-    ax.set_title('level %i' % level)
-    fig.canvas.draw()
-    pause()
-    #pause()
-
-
-fig.canvas.draw()
-pause()
-print (X)
-print (X[:,0])
-tarjet, = bx.plot(otherpoint[0],otherpoint[1], 'ro')
-print Q
-print otherpoint
-
-fig.canvas.draw()
-pause()"""
-	
-"""
-P=[]
-print Q
-for i in Q:
-	P.append(i[1])
-print P
-P=np.array(P)
-puntitos, = cx.plot(P[:,0],P[:,1], 'yo')
-fig.canvas.draw()
-pause()"""
-"""formato1=''
-formato1=formato1+str(k)+'_build.csv'
-with open(formato1, 'w') as f:
+with open(formato1, 'a') as f:
     writer = csv.writer(f, delimiter='\t')
-    writer.writerows(zip(cantidad,tiempo1))
+    writer.writerows(zip(tiempo1,str(quer)))
+'''
 
 formato2=''
-formato2=formato2+str(k)+'_query.csv'
-with open(formato2, 'w') as f1:
+formato2=formato2+quer+'_query.csv'
+with open(formato2, 'a') as f1:
     writer = csv.writer(f1, delimiter='\t')
     writer.writerows(zip(cantidad,tiempo2))
-"""
-
